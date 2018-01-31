@@ -179,7 +179,7 @@ while keepRunning:
         if ball.is_collided_with(leftPaddle) or ball.is_collided_with(rightPaddle):
             horizSpeed *= -1
             vertSpeed = randint(-10, 10)
-        if leftPoints == 10:
+        if leftPoints == 10 or rightPoints == 10:
             keepRunning = False
 
     screen.fill(black)
