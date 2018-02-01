@@ -139,22 +139,28 @@ vertSpeed = 0
 horizSpeed = 0
 leftorRight = 0
 
+gameOver = False
 while keepRunning:
+    keys = pygame.key.get_pressed()
+    end = pygame.image.load('end.png')
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             keepRunning = False
-    keys = pygame.key.get_pressed()
-    if keys[pygame.K_ESCAPE]:
+    if gameOver:
+        screen.blit(end, (0, 0))
+        if event.type == pygame.KEYDOWN:
+            keepRunning == False
+    elif keys[pygame.K_ESCAPE]:
         keepRunning = False
-    if keys[pygame.K_w] and leftPaddle.rect.y > 0:
+    elif keys[pygame.K_w] and leftPaddle.rect.y > 0:
         leftPaddle.moveup(7)
-    if keys[pygame.K_s] and leftPaddle.rect.y < 325:
+    elif keys[pygame.K_s] and leftPaddle.rect.y < 325:
         leftPaddle.movedown(7)
-    if keys[pygame.K_UP] and rightPaddle.rect.y > 0:
+    elif keys[pygame.K_UP] and rightPaddle.rect.y > 0:
         rightPaddle.moveup(7)
-    if keys[pygame.K_DOWN] and rightPaddle.rect.y < 325:
+    elif keys[pygame.K_DOWN] and rightPaddle.rect.y < 325:
         rightPaddle.movedown(7)
-    if keys[pygame.K_SPACE] and not served:
+    elif keys[pygame.K_SPACE] and not served:
         served = True
         randspeeds()
         if leftorRight == 1:
@@ -180,7 +186,9 @@ while keepRunning:
             horizSpeed *= -1
             vertSpeed = randint(-10, 10)
         if leftPoints == 10 or rightPoints == 10:
-            keepRunning = False
+            served = False
+            gameOver = True
+
     screen.fill(black)
     pygame.draw.rect(screen, white, [296, 18, 8, 4], 0)
     all_sprites_list.update()
